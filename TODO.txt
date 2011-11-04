@@ -1,0 +1,42 @@
+
+    private static final native void initAux() /*-{
+        $wnd.OpenLayers.Control.SQ51MousePosition = $wnd.OpenLayers.Class(OpenLayers.Control.MousePosition, {
+            isView: 0,
+            initialize: function(options) {
+                $wnd.OpenLayers.Control.MousePosition.prototype.initialize.apply(this, [options]);
+            },
+            redraw: function(evt) {
+                var lonLat;
+    
+                if (evt == null) 
+                    lonLat = new $wnd.OpenLayers.LonLat(0, 0);
+                else {
+                    if (this.lastXy == null || $wnd.Math.abs(evt.xy.x - this.lastXy.x) > this.granularity || $wnd.Math.abs(evt.xy.y - this.lastXy.y) > this.granularity) {
+                        this.lastXy = evt.xy;
+                        return;
+                    }
+                    lonLat = this.map.getLonLatFromPixel(evt.xy); //TODO, reference to map is invalid
+                    lonLat = lonLat.transform(map.getMap().getProjection(), map.displayProjection);
+                    this.lastXy = evt.xy;
+                }
+                var digits = parseInt(this.numdigits);
+                lat = lonLat.lat;
+                lon = lonLat.lon;
+    
+                var newHtml = this.prefix + lat + this.separator + lon + this.suffix;
+            
+                if (newHtml != this.element.innerHTML) 
+                    this.element.innerHTML = newHtml;
+            },
+            CLASS_NAME: "OpenLayers.Control.SQ51MousePosition"
+        });
+    }-*/;
+
+    document.getElementById('location').style['position'] = 'relative';
+    document.getElementById('location').style['textAlign'] = 'center';
+    map.getMap().addControl(new OpenLayers.Control.SQ51MousePosition({
+        div: OpenLayers.Util.getElement('location'),
+        prefix: 'Location lat: ',
+        separator: ' lon: '
+    })); 
+

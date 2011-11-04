@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='geoportail_gwt'>
+    <inherits name="com.google.gwt.user.User" />
+    <inherits name='fr.squat51.geoportail.Geoportail' />
+    <entry-point class='fr.squat51.geoportail.samples.client.BasicMap' />
+    <source path="client"/>
+</module>

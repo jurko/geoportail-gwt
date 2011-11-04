@@ -1,0 +1,9 @@
+*.class
+geoportail-gwt.jar
+KEY.txt
+gwt-unitCache
+war/WEB-INF/classes/
+war/WEB-INF/deploy/
+war/WEB-INF/lib/
+war/geoportail_gwt/
+
