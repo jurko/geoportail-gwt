@@ -42,7 +42,6 @@ public class BasicMap implements EntryPoint {
         panel.add(mapGeoportal);
         RootPanel.get("map").add(panel);
         //RootPanel.get("map").add(mapGeoportal);
-        mapGeoportal.getMap().resize(); //TODO, bug in size calculation after DOM insertion
         
         //TODO, full-element map and resize doesn't work well
     }

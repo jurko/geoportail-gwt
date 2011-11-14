@@ -78,6 +78,7 @@ public class MapWidget extends ResizeComposite {
                     });
                 }
             });
+            map.resize(); //recalculate initial size
         }
     }
 
