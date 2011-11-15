@@ -16,13 +16,17 @@
 package fr.squat51.geoportail.samples.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 import fr.squat51.geoportail.client.LatLng;
 import fr.squat51.geoportail.client.MapWidget;
 import fr.squat51.geoportail.client.Maps;
 
-public class BasicMap implements EntryPoint {
+public class DockLayoutMap implements EntryPoint {
     @Override
     public void onModuleLoad() {
         Maps.loadApi("YOUR_KEY", "1.0-e", new Runnable() {
@@ -36,7 +40,13 @@ public class BasicMap implements EntryPoint {
     public void onMapLoad() {
         final LatLng center = new LatLng(45.192, 5.72);
         final MapWidget mapGeoportal = new MapWidget(center, 13);
-        RootPanel.get("map").setSize("400px", "400px");
-        RootPanel.get("map").add(mapGeoportal);
+        
+        DockLayoutPanel panel = new DockLayoutPanel(Unit.EM);
+        panel.addNorth(new Label("header"), 3);
+        panel.addSouth(new Label("footer"), 1);
+        panel.addWest(new Label("menu"), 10);
+        panel.addEast(new HTML(), 1);
+        panel.add(mapGeoportal);
+        RootLayoutPanel.get().add(panel);
     }
 }

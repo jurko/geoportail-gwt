@@ -16,27 +16,20 @@
 package fr.squat51.geoportail.samples.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.Window;
 
-import fr.squat51.geoportail.client.LatLng;
-import fr.squat51.geoportail.client.MapWidget;
-import fr.squat51.geoportail.client.Maps;
-
-public class BasicMap implements EntryPoint {
-    @Override
+/* quick showcase, html files and showcase modules must match */
+public class Main implements EntryPoint {
     public void onModuleLoad() {
-        Maps.loadApi("YOUR_KEY", "1.0-e", new Runnable() {
-            @Override
-            public void run() {
-                onMapLoad();
-            }
-        });
-    }
-    
-    public void onMapLoad() {
-        final LatLng center = new LatLng(45.192, 5.72);
-        final MapWidget mapGeoportal = new MapWidget(center, 13);
-        RootPanel.get("map").setSize("400px", "400px");
-        RootPanel.get("map").add(mapGeoportal);
+        //String submodule = RootPanel.get().getElement().getAttribute("maps:submodule");
+        String submodule = Window.Location.getPath().substring(1).replaceAll(".html", "");
+        if (submodule.equals("BasicMap"))
+            (new BasicMap()).onModuleLoad();
+        else if (submodule.equals("FullSizeMap"))
+            (new FullSizeMap()).onModuleLoad();
+        else if (submodule.equals("DockLayoutMap"))
+            (new DockLayoutMap()).onModuleLoad();
+        else
+            Window.alert("Can't find submodule: " + submodule);
     }
 }

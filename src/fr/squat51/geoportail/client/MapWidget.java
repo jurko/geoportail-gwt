@@ -15,6 +15,7 @@
  */
 package fr.squat51.geoportail.client;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.logical.shared.ResizeEvent;
@@ -34,15 +35,15 @@ public class MapWidget extends ResizeComposite {
           getChildren().add(w);
           adopt(w);
         }
-        */
+         */
         public void onResize() {
-          for (Widget child : getChildren()) {
-            if (child instanceof RequiresResize) {
-              ((RequiresResize) child).onResize();
+            for (Widget child : getChildren()) {
+                if (child instanceof RequiresResize) {
+                    ((RequiresResize) child).onResize();
+                }
             }
-          }
         }
-      }
+    }
     
     private final MapPanel mapContainer = new MapPanel();
     private Map map;
@@ -53,7 +54,6 @@ public class MapWidget extends ResizeComposite {
     public MapWidget(LatLng center, Integer zoomLevel) {
         this.center = center;
         this.zoomLevel = zoomLevel;
-        mapContainer.setSize("100%", "100%");
         initWidget(mapContainer);
     }
     
@@ -65,26 +65,40 @@ public class MapWidget extends ResizeComposite {
     public void onLoad() {
         //TODO, Geoportal needs the DOM element to be inserted, otherwise wont' work..
         if (map == null) {
-            map = new Map(getElement(), center, zoomLevel);
+            map = new Map(mapContainer.getElement(), center, zoomLevel);
 
-            /* since onResize() doesn't work yet, add a global resizeHandler */
-            Window.addResizeHandler(new ResizeHandler() {
+            //defer recalculation of intial size, so it works for fixed sizes and full-element sizes 
+            Scheduler.get().scheduleDeferred(new ScheduledCommand() {
                 @Override
-                public void onResize(ResizeEvent event) {
-                    Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-                        public void execute() { 
-                            map.resize();
-                        }
-                    });
+                public void execute() {
+                    map.resize();
                 }
             });
-            map.resize(); //recalculate initial size
         }
+    }
+
+    @Override
+    public void onResize() {
+        map.resize();
+    }
+    
+    @Override
+    public void setSize(String height, String width) {
+        mapContainer.setSize(height, width);
+    }
+
+    @Override
+    public void setHeight(String height) {
+        mapContainer.setHeight(height);
+    }
+
+    @Override
+    public void setWidth(String width) {
+        mapContainer.setHeight(width);
     }
 
     public Map getMap() {
         //if (map == null)
-        //    map = new Map(getElement());
         return map;
     }
 }
