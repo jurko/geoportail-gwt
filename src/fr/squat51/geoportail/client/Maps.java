@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Juraj Polakovic
+ * Copyright (c) 2011 - 2012, Juraj Polakovic
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -50,9 +50,16 @@ public class Maps {
     public MapsScheduledCommand checkLoad(Runnable onLoad) {
         return new MapsScheduledCommand(onLoad);
     }
+
     public static void loadApi(String key, String version, Runnable onLoad) {
+        ScriptElement license = Document.get().createScriptElement();
+        license.setSrc("http://api.ign.fr/geoportail/api?key=" + key + "&amp;");
+        license.setLang("javascript");
+        license.setType("text/javascript");
+        Document.get().getBody().appendChild(license);
+
         ScriptElement script = Document.get().createScriptElement();
-        script.setSrc("http://api.ign.fr/geoportail/api?v=" + version + "&key=" + key + "&includeEngine=true&");
+        script.setSrc("http://api.ign.fr/geoportail/api/js/" + version + "/Geoportal.js");
         script.setLang("javascript");
         script.setType("text/javascript");
         Document.get().getBody().appendChild(script);

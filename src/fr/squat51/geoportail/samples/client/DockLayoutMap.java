@@ -29,7 +29,7 @@ import fr.squat51.geoportail.client.Maps;
 public class DockLayoutMap implements EntryPoint {
     @Override
     public void onModuleLoad() {
-        Maps.loadApi("YOUR_KEY", "1.0-e", new Runnable() {
+        Maps.loadApi("YOUR_KEY", "1.3", new Runnable() {
             @Override
             public void run() {
                 onMapLoad();
